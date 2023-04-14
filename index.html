@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Display a map on a webpage</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.0/mapbox-gl.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 10;
+            left: 20;
+            width: 300px;
+            z-index: 10;
+            background: #eb6734;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            margin-left: 20px;
+            font-family: Arial, Helvetica, sans-serif
+        }
+
+        .title {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        /* CSS */
+        .button-32 {
+            background-color: #fff000;
+            border-radius: 12px;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 10px 15px;
+            text-align: center;
+            transition: 200ms;
+            width: 100%;
+            box-sizing: border-box;
+            border: 0;
+            font-size: 16px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            margin: 10px;
+        }
+
+        .button-32:not(:disabled):hover,
+        .button-32:not(:disabled):focus {
+            outline: 0;
+            background: #f4e603;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, .2), 0 3px 8px 0 rgba(0, 0, 0, .15);
+        }
+
+        .button-32:disabled {
+            filter: saturate(0.2) opacity(0.5);
+            -webkit-filter: saturate(0.2) opacity(0.5);
+            cursor: not-allowed;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="title">
+            Places I call home, or sort of home
+        </div>
+        <div class=description>
+            I pointed out all the places I have lived, with flyTos to each continent to make it easier to access
+        </div>
+        <!-- HTML !-->
+        <button id="fly-to-england" class="button-32" role="button">Fly to England</button>
+        <button id="fly-to-america" class="button-32" role="button">Fly to America</button>
+        <button id="fly-to-india" class="button-32" role="button">Fly to India</button>
+    </div>
+    <div id="map"></div>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoicml0d2lja2QiLCJhIjoiY2xnNXFmZjN2MDV1ejNlbXBybzN1MHFuayJ9.WWyhfkuYQC1ckDvl5IpyJw';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/satellite-streets-v12', // style URL
+            center: [77.05664166858152, 28.458590949300138], // starting position [lng, lat]
+            zoom: 9.5 // starting zoom
+        });
+
+        // create the popup
+        const Firstpopup = new mapboxgl.Popup({ offset: 25 }).setText(
+            'My actual home, where my parents live'
+        );
+
+        // create the popup
+        const popup2 = new mapboxgl.Popup({ offset: 25 }).setText(
+            'My first home, where I went to school'
+        );
+
+        // create the popup
+        const popup3 = new mapboxgl.Popup({ offset: 25 }).setText(
+            'My home in Leeds, where I grew up the fastest'
+        );
+
+        // create the popup
+        const popup4 = new mapboxgl.Popup({ offset: 25 }).setText(
+            'My current home, where I currently try and survive (it is a shoebox)'
+        );
+
+        // create the popup
+        const popup5 = new mapboxgl.Popup({ offset: 25 }).setText(
+            'My friendliest home, where I grew up the hardest- the library'
+        );
+
+        // create the popup
+        const popup6 = new mapboxgl.Popup({ offset: 25 }).setText(
+            'My least-friendly home, where I somehow manage to get all my work done (Bobst)'
+        );
+
+
+        const marker1 = new mapboxgl.Marker({ color: '#eb6734' })
+            .setLngLat([77.05664166704999, 28.458576794006728])
+            .setPopup(Firstpopup)
+            .addTo(map);
+
+        const marker2 = new mapboxgl.Marker({ color: '#4f34eb' })
+            .setLngLat([-1.5734296153010323, 53.8140140009343])
+            .setPopup(popup3)
+            .addTo(map);
+
+        const marker3 = new mapboxgl.Marker({ color: '#cc34eb' })
+            .setLngLat([-73.9648320613069, 40.80281218475095])
+            .setPopup(popup4)
+            .addTo(map);
+
+        const marker4 = new mapboxgl.Marker({ color: '#3aeb34' })
+            .setLngLat([-1.5516589452946572, 53.80712041041992])
+            .setPopup(popup5)
+            .addTo(map);
+
+        const marker5 = new mapboxgl.Marker({ color: '#ebd934' })
+            .setLngLat([-73.99718901713531, 40.729557956139686])
+            .setPopup(popup6)
+            .addTo(map);
+
+        const marker6 = new mapboxgl.Marker({ color: '#eb3434' })
+            .setLngLat([77.08591861122522, 28.4668288088671])
+            .setPopup(popup2)
+            .addTo(map);
+
+        $('#fly-to-england').on('click', function () {
+            map.flyTo({
+                center: [-1.53744, 53.79519]
+            })
+        })
+        $('#fly-to-america').on('click', function () {
+            map.flyTo({
+                center: [-73.98504, 40.75408]
+            })
+        })
+        $('#fly-to-india').on('click', function () {
+            map.flyTo({
+                center: [77.06741, 28.44155]
+            })
+        })
+    </script>
+
+</body>
+
+</html>
